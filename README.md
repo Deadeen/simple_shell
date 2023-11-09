@@ -1,2 +1,1 @@
-# simple_shell
-i will try my best
+okay lets do this
