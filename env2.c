@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "deadeenshell.h"
 
 /**
  * get_environ - returns the string array copy of our environ
