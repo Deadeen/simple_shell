@@ -132,10 +132,10 @@ int _putfd(char c, int fd);
 int _putsfd(char *str, int fd);
 
 /* string_functions.c */
-int _strlen(char *);
-int _strcmp(char *, char *);
-char *starts_with(const char *, const char *);
-char *_strcat(char *, char *);
+int _stringlen(char *);
+int _strcomp(char *, char *);
+char *start_wth(const char *, const char *);
+char *_stringcat(char *, char *);
 
 /* string_functions2.c */
 char *_strcpy(char *, char *);
