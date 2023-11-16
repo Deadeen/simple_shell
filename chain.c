@@ -27,7 +27,7 @@ int is_chain(info_t *info, char *buf, size_t *p)
 	else if (buf[j] == ';') /* found end of this command */
 	{
 		buf[j] = 0; /* replace semicolon with null */
-		info->cmd_buf_type = CMD_CHAIN;
+		info->cmd_buf_type = THE_DEF_SALSAL;
 	}
 	else
 		return (0);
