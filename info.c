@@ -67,8 +67,8 @@ void free_info(info_t *info, int all)
 		ffree(info->environ);
 			info->environ = NULL;
 		bfree((void **)info->bashshellbuff);
-		if (info->readfd > 2)
-			close(info->readfd);
+		if (info->letsread > 2)
+			close(info->letsread);
 		_putchar(THE_BONEBUFF);
 	}
 }
