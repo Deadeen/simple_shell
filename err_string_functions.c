@@ -31,12 +31,12 @@ int _eputchar(char c)
 	static int i;
 	static char buf[SIZE_OF_BUF_WRITE];
 
-	if (c == BUF_FLUSH || i >= SIZE_OF_BUF_WRITE)
+	if (c == THE_BONEBUFF || i >= SIZE_OF_BUF_WRITE)
 	{
 		write(2, buf, i);
 		i = 0;
 	}
-	if (c != BUF_FLUSH)
+	if (c != THE_BONEBUFF)
 		buf[i++] = c;
 	return (1);
 }
@@ -54,12 +54,12 @@ int _putfd(char c, int fd)
 	static int i;
 	static char buf[SIZE_OF_BUF_WRITE];
 
-	if (c == BUF_FLUSH || i >= SIZE_OF_BUF_WRITE)
+	if (c == THE_BONEBUFF || i >= SIZE_OF_BUF_WRITE)
 	{
 		write(fd, buf, i);
 		i = 0;
 	}
-	if (c != BUF_FLUSH)
+	if (c != THE_BONEBUFF)
 		buf[i++] = c;
 	return (1);
 }
