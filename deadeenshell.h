@@ -14,7 +14,7 @@
 
 /* for read/write buffers */
 #define LETS_SET_LIMITS 1024
-#define WRITE_BUF_SIZE 1024
+#define SIZE_OF_BUF_WRITE 1024
 #define BUF_FLUSH -1
 
 /* for command chaining */
