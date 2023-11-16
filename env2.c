@@ -10,7 +10,7 @@ char **get_environ(info_t *info)
 {
 	if (!info->myuniver || info->changecurrent)
 	{
-		info->myuniver = list_to_strings(info->env);
+		info->myuniver = list_to_strings(info->theenv);
 		info->changecurrent = 0;
 	}
 
@@ -22,11 +22,11 @@ char **get_environ(info_t *info)
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *  Return: 1 on delete, 0 otherwise
- * @var: the string env var property
+ * @var: the string theenv var property
  */
 int _unsetenv(info_t *info, char *var)
 {
-	list_t *node = info->env;
+	list_t *node = info->theenv;
 	size_t i = 0;
 	char *p;
 
@@ -35,12 +35,12 @@ int _unsetenv(info_t *info, char *var)
 
 	while (node)
 	{
-		p = starts_with(node->str, var);
+		p = starts_with(node->denstr, var);
 		if (p && *p == '=')
 		{
-			info->changecurrent = delete_node_at_index(&(info->env), i);
+			info->changecurrent = delete_node_at_index(&(info->theenv), i);
 			i = 0;
-			node = info->env;
+			node = info->theenv;
 			continue;
 		}
 		node = node->next;
@@ -54,8 +54,8 @@ int _unsetenv(info_t *info, char *var)
  *             or modify an existing one
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
- * @var: the string env var property
- * @value: the string env var value
+ * @var: the string theenv var property
+ * @value: the string theenv var value
  *  Return: Always 0
  */
 int _setenv(info_t *info, char *var, char *value)
@@ -73,20 +73,20 @@ int _setenv(info_t *info, char *var, char *value)
 	_strcpy(buf, var);
 	_strcat(buf, "=");
 	_strcat(buf, value);
-	node = info->env;
+	node = info->theenv;
 	while (node)
 	{
-		p = starts_with(node->str, var);
+		p = starts_with(node->denstr, var);
 		if (p && *p == '=')
 		{
-			free(node->str);
-			node->str = buf;
+			free(node->denstr);
+			node->denstr = buf;
 			info->changecurrent = 1;
 			return (0);
 		}
 		node = node->next;
 	}
-	add_node_end(&(info->env), buf, 0);
+	add_node_end(&(info->theenv), buf, 0);
 	free(buf);
 	info->changecurrent = 1;
 	return (0);
