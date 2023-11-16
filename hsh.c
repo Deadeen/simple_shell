@@ -36,9 +36,9 @@ int hsh(info_t *info, char **av)
 		exit(info->status);
 	if (builtin_ret == -2)
 	{
-		if (info->err_num == -1)
+		if (info->numerrline == -1)
 			exit(info->status);
-		exit(info->err_num);
+		exit(info->numerrline);
 	}
 	return (builtin_ret);
 }
