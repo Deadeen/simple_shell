@@ -103,7 +103,7 @@ ssize_t read_buf(info_t *info, char *buf, size_t *i)
 
 	if (*i)
 		return (0);
-	r = read(info->readfd, buf, LETS_SET_LIMITS);
+	r = read(info->letsread, buf, LETS_SET_LIMITS);
 	if (r >= 0)
 		*i = r;
 	return (r);
