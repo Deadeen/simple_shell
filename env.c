@@ -13,7 +13,7 @@ int _myenv(info_t *info)
 }
 
 /**
- * _getenv - gets the value of an environ variable
+ * _getenv - gets the value of an myuniver variable
  * @info: Structure containing potential arguments. Used to maintain
  * @name: env var name
  *
@@ -85,8 +85,8 @@ int populate_env_list(info_t *info)
 	list_t *node = NULL;
 	size_t i;
 
-	for (i = 0; environ[i]; i++)
-		add_node_end(&node, environ[i], 0);
+	for (i = 0; myuniver[i]; i++)
+		add_node_end(&node, myuniver[i], 0);
 	info->env = node;
 	return (0);
 }
