@@ -1,20 +1,20 @@
 #include "deadeenshell.h"
 
 /**
- * get_environ - returns the string array copy of our environ
+ * get_environ - returns the string array copy of our myuniver
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  * Return: Always 0
  */
 char **get_environ(info_t *info)
 {
-	if (!info->environ || info->changecurrent)
+	if (!info->myuniver || info->changecurrent)
 	{
-		info->environ = list_to_strings(info->env);
+		info->myuniver = list_to_strings(info->env);
 		info->changecurrent = 0;
 	}
 
-	return (info->environ);
+	return (info->myuniver);
 }
 
 /**
