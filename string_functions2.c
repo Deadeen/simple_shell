@@ -24,42 +24,42 @@ char *_strcpy(char *dest, char *src)
 
 /**
  * _strdup - duplicates a string
- * @str: the string to duplicate
+ * @denstr: the string to duplicate
  *
  * Return: pointer to the duplicated string
  */
-char *_strdup(const char *str)
+char *_strdup(const char *denstr)
 {
 	int length = 0;
 	char *ret;
 
-	if (str == NULL)
+	if (denstr == NULL)
 		return (NULL);
-	while (*str++)
+	while (*denstr++)
 		length++;
 	ret = malloc(sizeof(char) * (length + 1));
 	if (!ret)
 		return (NULL);
 	for (length++; length--;)
-		ret[length] = *--str;
+		ret[length] = *--denstr;
 	return (ret);
 }
 
 /**
  *_puts - prints an input string
- *@str: the string to be printed
+ *@denstr: the string to be printed
  *
  * Return: Nothing
  */
-void _puts(char *str)
+void _puts(char *denstr)
 {
 	int i = 0;
 
-	if (!str)
+	if (!denstr)
 		return;
-	while (str[i] != '\0')
+	while (denstr[i] != '\0')
 	{
-		_putchar(str[i]);
+		_putchar(denstr[i]);
 		i++;
 	}
 }
