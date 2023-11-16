@@ -89,10 +89,10 @@ void find_cmd(info_t *info)
 	int i, k;
 
 	info->path = info->argv[0];
-	if (info->linecount_flag == 1)
+	if (info->flagslines == 1)
 	{
 		info->numline++;
-		info->linecount_flag = 0;
+		info->flagslines = 0;
 	}
 	for (i = 0, k = 0; info->arg[i]; i++)
 		if (!is_delim(info->arg[i], " \t\n"))
