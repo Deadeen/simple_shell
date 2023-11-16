@@ -41,7 +41,7 @@ void print_error(info_t *info, char *estr)
 	_eputs(": ");
 	print_d(info->numline, STDERR_FILENO);
 	_eputs(": ");
-	_eputs(info->argv[0]);
+	_eputs(info->beins[0]);
 	_eputs(": ");
 	_eputs(estr);
 }
@@ -87,23 +87,23 @@ int print_d(int input, int fd)
 
 /**
  * convert_number - converter function, a clone of itoa
- * @num: number
+ * @denum: number
  * @base: base
  * @flags: argument flags
  *
  * Return: string
  */
-char *convert_number(long int num, int base, int flags)
+char *convert_number(long int denum, int base, int flags)
 {
 	static char *array;
 	static char buffer[50];
 	char sign = 0;
 	char *ptr;
-	unsigned long n = num;
+	unsigned long n = denum;
 
-	if (!(flags & THE_NUM_PLUS_CONV) && num < 0)
+	if (!(flags & THE_NUM_PLUS_CONV) && denum < 0)
 	{
-		n = -num;
+		n = -denum;
 		sign = '-';
 
 	}
