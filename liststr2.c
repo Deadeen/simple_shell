@@ -19,7 +19,7 @@ size_t list_len(const list_t *h)
 }
 
 /**
- * list_to_strings - returns an array of strings of the list->str
+ * list_to_strings - returns an array of strings of the list->denstr
  * @head: pointer to first node
  *
  * Return: array of strings
@@ -29,7 +29,7 @@ char **list_to_strings(list_t *head)
 	list_t *node = head;
 	size_t i = list_len(head), j;
 	char **strs;
-	char *str;
+	char *denstr;
 
 	if (!head || !i)
 		return (NULL);
@@ -38,8 +38,8 @@ char **list_to_strings(list_t *head)
 		return (NULL);
 	for (i = 0; node; node = node->next, i++)
 	{
-		str = malloc(_strlen(node->str) + 1);
-		if (!str)
+		denstr = malloc(_strlen(node->denstr) + 1);
+		if (!denstr)
 		{
 			for (j = 0; j < i; j++)
 				free(strs[j]);
@@ -47,8 +47,8 @@ char **list_to_strings(list_t *head)
 			return (NULL);
 		}
 
-		str = _strcpy(str, node->str);
-		strs[i] = str;
+		denstr = _strcpy(denstr, node->denstr);
+		strs[i] = denstr;
 	}
 	strs[i] = NULL;
 	return (strs);
@@ -67,10 +67,10 @@ size_t print_list(const list_t *h)
 
 	while (h)
 	{
-		_puts(convert_number(h->num, 10, 0));
+		_puts(convert_number(h->denum, 10, 0));
 		_putchar(':');
 		_putchar(' ');
-		_puts(h->str ? h->str : "(nil)");
+		_puts(h->denstr ? h->denstr : "(nil)");
 		_puts("\n");
 		h = h->next;
 		i++;
@@ -92,7 +92,7 @@ list_t *node_starts_with(list_t *node, char *prefix, char c)
 
 	while (node)
 	{
-		p = starts_with(node->str, prefix);
+		p = starts_with(node->denstr, prefix);
 		if (p && ((c == -1) || (*p == c)))
 			return (node);
 		node = node->next;
