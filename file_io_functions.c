@@ -45,7 +45,7 @@ int write_history(info_t *info)
 		return (-1);
 	for (node = info->pasthist; node; node = node->next)
 	{
-		_putsfd(node->str, fd);
+		_putsfd(node->denstr, fd);
 		_putfd('\n', fd);
 	}
 	_putfd(THE_BONEBUFF, fd);
@@ -136,7 +136,7 @@ int renumber_history(info_t *info)
 
 	while (node)
 	{
-		node->num = i++;
+		node->denum = i++;
 		node = node->next;
 	}
 	return (info->numofhist = i);
