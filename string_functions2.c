@@ -76,12 +76,12 @@ int _putchar(char c)
 	static int i;
 	static char buf[SIZE_OF_BUF_WRITE];
 
-	if (c == BUF_FLUSH || i >= SIZE_OF_BUF_WRITE)
+	if (c == THE_BONEBUFF || i >= SIZE_OF_BUF_WRITE)
 	{
 		write(1, buf, i);
 		i = 0;
 	}
-	if (c != BUF_FLUSH)
+	if (c != THE_BONEBUFF)
 		buf[i++] = c;
 	return (1);
 }
