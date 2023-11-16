@@ -57,21 +57,21 @@ int find_builtin(info_t *info)
 	int i, built_in_ret = -1;
 	builtin_table builtintbl[] = {
 		{"exit", _myexit},
-		{"env", _myenv},
+		{"theenv", _myenv},
 		{"help", _myhelp},
 		{"pasthist", _myhistory},
 		{"setenv", _mysetenv},
 		{"unsetenv", _myunsetenv},
 		{"cd", _mycd},
-		{"alias", _myalias},
+		{"friends", _myalias},
 		{NULL, NULL}
 	};
 
 	for (i = 0; builtintbl[i].type; i++)
-		if (_strcmp(info->argv[0], builtintbl[i].type) == 0)
+		if (_strcmp(info->beins[0], builtintbl[i].type) == 0)
 		{
 			info->numline++;
-			built_in_ret = builtintbl[i].func(info);
+			built_in_ret = builtintbl[i].truefunction(info);
 			break;
 		}
 	return (built_in_ret);
@@ -85,33 +85,33 @@ int find_builtin(info_t *info)
  */
 void find_cmd(info_t *info)
 {
-	char *path = NULL;
+	char *direct = NULL;
 	int i, k;
 
-	info->path = info->argv[0];
+	info->direct = info->beins[0];
 	if (info->flagslines == 1)
 	{
 		info->numline++;
 		info->flagslines = 0;
 	}
-	for (i = 0, k = 0; info->arg[i]; i++)
-		if (!is_delim(info->arg[i], " \t\n"))
+	for (i = 0, k = 0; info->bein[i]; i++)
+		if (!is_delim(info->bein[i], " \t\n"))
 			k++;
 	if (!k)
 		return;
 
-	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
-	if (path)
+	direct = find_path(info, _getenv(info, "PATH="), info->beins[0]);
+	if (direct)
 	{
-		info->path = path;
+		info->direct = direct;
 		fork_cmd(info);
 	}
 	else
 	{
 		if ((interactive(info) || _getenv(info, "PATH=")
-			|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
+			|| info->beins[0][0] == '/') && is_cmd(info, info->beins[0]))
 			fork_cmd(info);
-		else if (*(info->arg) != '\n')
+		else if (*(info->bein) != '\n')
 		{
 			info->stawhats = 127;
 			print_error(info, "not found\n");
@@ -138,7 +138,7 @@ void fork_cmd(info_t *info)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(info->path, info->argv, get_environ(info)) == -1)
+		if (execve(info->direct, info->beins, get_environ(info)) == -1)
 		{
 			free_info(info, 1);
 			if (errno == EACCES)
