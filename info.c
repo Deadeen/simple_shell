@@ -64,8 +64,8 @@ void free_info(info_t *info, int all)
 			free_list(&(info->history));
 		if (info->alias)
 			free_list(&(info->alias));
-		ffree(info->environ);
-			info->environ = NULL;
+		ffree(info->myuniver);
+			info->myuniver = NULL;
 		bfree((void **)info->bashshellbuff);
 		if (info->letsread > 2)
 			close(info->letsread);
