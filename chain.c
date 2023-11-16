@@ -36,7 +36,7 @@ int is_chain(info_t *info, char *buf, size_t *p)
 }
 
 /**
- * check_chain - checks we should continue chaining based on last status
+ * check_chain - checks we should continue chaining based on last stawhats
  * @info: the parameter struct
  * @buf: the char buffer
  * @p: address of current position in buf
@@ -51,7 +51,7 @@ void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 
 	if (info->ourtype == THE_DEF_AND)
 	{
-		if (info->status)
+		if (info->stawhats)
 		{
 			buf[i] = 0;
 			j = len;
@@ -59,7 +59,7 @@ void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 	}
 	if (info->ourtype == THE_DEF_OR)
 	{
-		if (!info->status)
+		if (!info->stawhats)
 		{
 			buf[i] = 0;
 			j = len;
@@ -83,17 +83,17 @@ int replace_alias(info_t *info)
 
 	for (i = 0; i < 10; i++)
 	{
-		node = node_starts_with(info->alias, info->argv[0], '=');
+		node = node_starts_with(info->friends, info->beins[0], '=');
 		if (!node)
 			return (0);
-		free(info->argv[0]);
-		p = _strchr(node->str, '=');
+		free(info->beins[0]);
+		p = _strchr(node->denstr, '=');
 		if (!p)
 			return (0);
 		p = _strdup(p + 1);
 		if (!p)
 			return (0);
-		info->argv[0] = p;
+		info->beins[0] = p;
 	}
 	return (1);
 }
@@ -109,31 +109,31 @@ int replace_vars(info_t *info)
 	int i = 0;
 	list_t *node;
 
-	for (i = 0; info->argv[i]; i++)
+	for (i = 0; info->beins[i]; i++)
 	{
-		if (info->argv[i][0] != '$' || !info->argv[i][1])
+		if (info->beins[i][0] != '$' || !info->beins[i][1])
 			continue;
 
-		if (!_strcmp(info->argv[i], "$?"))
+		if (!_strcmp(info->beins[i], "$?"))
 		{
-			replace_string(&(info->argv[i]),
-				_strdup(convert_number(info->status, 10, 0)));
+			replace_string(&(info->beins[i]),
+				_strdup(convert_number(info->stawhats, 10, 0)));
 			continue;
 		}
-		if (!_strcmp(info->argv[i], "$$"))
+		if (!_strcmp(info->beins[i], "$$"))
 		{
-			replace_string(&(info->argv[i]),
+			replace_string(&(info->beins[i]),
 				_strdup(convert_number(getpid(), 10, 0)));
 			continue;
 		}
-		node = node_starts_with(info->env, &info->argv[i][1], '=');
+		node = node_starts_with(info->theenv, &info->beins[i][1], '=');
 		if (node)
 		{
-			replace_string(&(info->argv[i]),
-				_strdup(_strchr(node->str, '=') + 1));
+			replace_string(&(info->beins[i]),
+				_strdup(_strchr(node->denstr, '=') + 1));
 			continue;
 		}
-		replace_string(&info->argv[i], _strdup(""));
+		replace_string(&info->beins[i], _strdup(""));
 
 	}
 	return (0);
