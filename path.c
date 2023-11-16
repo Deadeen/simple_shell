@@ -3,16 +3,16 @@
 /**
  * is_cmd - determines if a file is an executable command
  * @info: the info struct
- * @path: path to the file
+ * @direct: direct to the file
  *
  * Return: 1 if true, 0 otherwise
  */
-int is_cmd(info_t *info, char *path)
+int is_cmd(info_t *info, char *direct)
 {
 	struct stat st;
 
 	(void)info;
-	if (!path || stat(path, &st))
+	if (!direct || stat(direct, &st))
 		return (0);
 
 	if (st.st_mode & S_IFREG)
@@ -48,12 +48,12 @@ char *dup_chars(char *pathstr, int start, int stop)
  * @pathstr: the PATH string
  * @cmd: the cmd to find
  *
- * Return: full path of cmd if found or NULL
+ * Return: full direct of cmd if found or NULL
  */
 char *find_path(info_t *info, char *pathstr, char *cmd)
 {
 	int i = 0, curr_pos = 0;
-	char *path;
+	char *direct;
 
 	if (!pathstr)
 		return (NULL);
@@ -66,16 +66,16 @@ char *find_path(info_t *info, char *pathstr, char *cmd)
 	{
 		if (!pathstr[i] || pathstr[i] == ':')
 		{
-			path = dup_chars(pathstr, curr_pos, i);
-			if (!*path)
-				_strcat(path, cmd);
+			direct = dup_chars(pathstr, curr_pos, i);
+			if (!*direct)
+				_strcat(direct, cmd);
 			else
 			{
-				_strcat(path, "/");
-				_strcat(path, cmd);
+				_strcat(direct, "/");
+				_strcat(direct, cmd);
 			}
-			if (is_cmd(info, path))
-				return (path);
+			if (is_cmd(info, direct))
+				return (direct);
 			if (!pathstr[i])
 				break;
 			curr_pos = i;
